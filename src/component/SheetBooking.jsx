@@ -12,7 +12,7 @@ export function SheetBooking() {
 
     const seatDataArr = seatId.split("_");
     
-    const [row, position, type] = seatDataArr;
+    const [row, position] = seatDataArr;
     
     if (selectedSeats.incudes(seatId)) {
     
@@ -35,6 +35,8 @@ export function SheetBooking() {
           // this is last row, do not select any more rows
           setSelectedSeats(seatId);
           seatData.isSelected = true;
+          setHallRows(hallRows);
+          setMaxTickets(maxTickets);
           return;
           
           }
