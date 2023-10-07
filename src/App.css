@@ -77,3 +77,18 @@
   color: rgb(6, 6, 62);
   font-size: 1.2rem;
 }
+
+/* sitting arrengement */
+.empty{
+  border: none;
+}
+.unavailable{
+  background-color: rgba(0, 0, 0, 0.282);
+  cursor: pointer;
+}
+.available{
+  cursor: pointer;
+}
+.available:hover{
+  background-color: rgb(57, 190, 57);
+}
