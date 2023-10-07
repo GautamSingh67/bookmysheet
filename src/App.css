@@ -1,0 +1,79 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+.ticketType {
+  width: 20%;
+  height: 3rem;
+  font-size: 1.5rem;
+  color: #040424;
+  border: 2px solid #0000005e;
+  margin-right: 1rem;
+}
+
+.ticketChoice {
+  width: 7%;
+}
+
+.ticketParent {
+  margin-top: 4%;
+  margin-bottom: 2%;
+  margin-left: 4.3%;
+}
+
+.hallSeat {
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid rgba(0, 0, 0, 0.425);
+  margin: 4px;
+}
+
+.seatRow {
+  margin-right: 1rem;
+  margin-left: 0.5rem;
+}
+
+.seats {
+  width: 73vw;
+  height: 62vh;
+  overflow-y: scroll;
+  margin-left: 6%;
+  overflow-x: hidden;
+  border-top: 2px solid rgba(0, 0, 0, 0.282);
+  border-left: 2px solid rgba(0, 0, 0, 0.282);
+}
+
+.button {
+  text-align: end;
+  margin-top: 3%;
+}
+
+.button button {
+  background-color: #d60c0c;
+  color: white;
+  border: none;
+  padding: 0.4rem;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+.button button:active{
+  transform: translateY(2px);
+}
+
+.head {
+  display: flex;
+  gap: 7%;
+}
+
+.rightSubSection{
+  display: flex;
+  gap: 1rem;
+  font-family: serif;
+  margin-bottom: 0.4rem;
+  margin-top: 1rem;
+  color: rgb(6, 6, 62);
+  font-size: 1.2rem;
+}
