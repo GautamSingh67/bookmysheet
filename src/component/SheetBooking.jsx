@@ -1,78 +1,47 @@
 import React, { useState } from 'react'
-import Seat from './Seat'
+//import Seat from './Seat'
 export function SheetBooking() {
-  // console.log(hallData);
-
-
-  const [hallRows, setHallRows] = useState(hallData.seating_layout);
-  const[selectedSeats,setSelectedSeats] = useState([]);
-  const[maxTickets,setMaxTickets] = useState(0);
-
-  const onSeatSelection = (seatId) => {
-
-    const seatDataArr = seatId.split("_");
+   
+  const[ticketType,setTicketType] = useState("");
+  const[ticketQuantity,setTicketQuantity] = useState("");
+  const[myHallData,setMyHallData] = useState(hallData);
+  const[a,setA] = useState({})
+  let b;
+  function seatSelection(id){
+     const [row,position] = id.split("_");
+     const change = hallData.seating_layout[row-1].seats[position-1];
+     change.isSelected = "true";
+     setMyHallData(myHallData);
+     console.log(change);
+     console.log(myHallData);
+      
+     b = {
+      backgroundColor:"red",
+     }
+     setA(b);
     
-    const [row, position] = seatDataArr;
-    
-    if (selectedSeats.incudes(seatId)) {
-    
-       return;
-    
+  }
+
+    function  confirmTicket(){
+      alert (`Your Ticket is confirmed.
+      Ticket type ${ticketType}
+      Ticket quantity ${ticketQuantity}`);
     }
-    const rowData = hallRows.find((layoutRow) => {return layoutRow.row === row});
-    const rowSeats = rowData.seats;
-    const seatData = rowSeats.find((seatInfo) => seatInfo.position === position);
-    if(seatData.status === "available" && seatData.isSelected === false){
-      if (selectedSeats.length === maxTickets) {
-    
-        // Deselect all selected seats AND add current seat as the FIRST item in selectedSeats
-        setSelectedSeats(seatId);
-        seatData.isSelected = true;
-        return;
-        }
-        if (position === rowSeats.length) {
-    
-          // this is last row, do not select any more rows
-          setSelectedSeats(seatId);
-          seatData.isSelected = true;
-          setHallRows(hallRows);
-          setMaxTickets(maxTickets);
-          return;
-          
-          }
-          setSelectedSeats([...selectedSeats,seatId]);
-          seatData.isSelected = true;
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    // if current seat is NOT among these types (unavailable, empty) and selectedSeats.length !== maxTickets and if current seat is not the last seat in thew current row then select the seat
-    
-    // Find next seat
-    
-    const nextSeat = row.seats[position];
-    
-    onSeatSelection(nextSeat.id)
-    
-    };
+  
 
+  console.log(myHallData);
   return (
     <div>
       {/* ticket selection */}
       <div className='ticketParent'>
-        <select className='ticketType'>
-          <option>Ticket Type</option>
+        <select className='ticketType' onChange={(e)=>setTicketType(e.target.value)}>
+          <option hidden>Ticket Type</option>
           <option value="standard">Standard</option>
           <option value="premium">Premium</option>
         </select>
 
-        <select className='ticketChoice ticketType'>
-          <option>Qty</option>
+        <select className='ticketChoice ticketType' onChange={(e)=>setTicketQuantity(e.target.value)}>
+          <option hidden>Qty</option>
           <option value="one">1</option>
           <option value="two">2</option>
           <option value="three">3</option>
@@ -94,35 +63,35 @@ export function SheetBooking() {
             <table className='hallTable'>
               <tbody>
                 {
-                  hallRows.map((value, index1) => {
-
+                  myHallData.seating_layout.map((value, index1) => {
+                    let makeId = value.row;
                     return <tr key={index1}>
                       <td>
                         <div className='seatRow'>{value.label}</div>
                       </td>
                       {
-                        hallData.seating_layout[index1].seats.map((value, index2) => {
+                        myHallData.seating_layout[index1].seats.map((value, index2) => {
 
-                          return <Seat seatData={value} key = {index2} onSeatClick = {onSeatSelection} />
+                          // return <Seat seatData={value} key={index2} onSeatClick={onSeatSelection} />
 
-                          // if (value.status === "empty") {
-                          //   return <td key={index2}>
-                          //     <div className='hallSeat empty'></div>
-                          //   </td>
-                          // }
-                          // else if (value.status === "unavailable") {
-                          //   return <td key={index2}>
-                          //     <div className='hallSeat unavailable'></div>
-                          //   </td>
-                          // }
-                          // else if (value.status === "available") {
-                          //   return <td key={index2}>
-                          //     <div className='hallSeat available'></div>
-                          //   </td>
-                          // }
-                          // else {
-                          //   return <td></td>
-                          // }
+                          if (value.status === "empty") {
+                            return <td key={index2}>
+                              <div className='hallSeat empty'></div>
+                            </td>
+                          }
+                          else if (value.status === "unavailable") {
+                            return <td key={index2}>
+                              <div className='hallSeat unavailable'></div>
+                            </td>
+                          }
+                          else if (value.status === "available") {
+                            return <td key={index2}>
+                              <div className={`hallSeat available`} style={a} onClick={()=>{seatSelection(makeId+"_"+value.position)}}></div>
+                            </td>
+                          }
+                          else {
+                            return <td></td>
+                          }
                         })
                       }
                     </tr>
@@ -136,7 +105,7 @@ export function SheetBooking() {
 
           {/* proceed button */}
           <div className='button'>
-            <button>PROCEED</button>
+            <button onClick={()=>{confirmTicket()}}>PROCEED</button>
           </div>
         </div>
         {/* end of proceed button */}
