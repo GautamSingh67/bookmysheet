@@ -1,11 +1,11 @@
-import React, {useRef, useState } from 'react'
+import React, {useState } from 'react'
 //import Seat from './Seat'
 export function SheetBooking() {
    
   const[ticketType,setTicketType] = useState("Ticket Type");
   const[ticketQuantity,setTicketQuantity] = useState("Qty");
   const[myHallData,setMyHallData] = useState(hallData);
-  const myRef = useRef(null);
+
   let count = 0;
   function seatSelection(e){
     //  const [row,position] = id.split("_");
@@ -33,11 +33,21 @@ export function SheetBooking() {
   }
 
     function  confirmTicket(){
+      if(ticketType === "Ticket Type"){
+        return alert("error detail, please select your ticket");
+      }
+      else if(ticketQuantity === "Qty"){
+        return alert("error detail, please select your ticket");
+      }
+      else{
       alert (`Your Ticket is confirmed.
       Ticket type ${ticketType}
       Ticket quantity ${ticketQuantity}`);
       setTicketType("Ticket Type");
       setTicketQuantity("Qty");
+      setMyHallData(myHallData);
+      }
+
     }
 
   //console.log(myHallData);
@@ -76,7 +86,7 @@ export function SheetBooking() {
               <tbody>
                 {
                   myHallData.seating_layout.map((value, index1) => {
-                    let makeId = value.row;
+                   // let makeId = value.row;
                     return <tr key={index1}>
                       <td>
                         <div className='seatRow'>{value.label}</div>
@@ -98,7 +108,7 @@ export function SheetBooking() {
                           }
                           else if (value.status === "available") {
                             return <td key={index2}>
-                              <div className="hallSeat available" ref={myRef} onClick={seatSelection}></div>
+                              <div className="hallSeat available" onClick={seatSelection}></div>
                             </td>
                           }
                           else {
