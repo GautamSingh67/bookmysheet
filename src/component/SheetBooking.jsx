@@ -1,24 +1,34 @@
-import React, { useState } from 'react'
+import React, {useRef, useState } from 'react'
 //import Seat from './Seat'
 export function SheetBooking() {
    
-  const[ticketType,setTicketType] = useState("");
-  const[ticketQuantity,setTicketQuantity] = useState("");
+  const[ticketType,setTicketType] = useState("Ticket Type");
+  const[ticketQuantity,setTicketQuantity] = useState("Qty");
   const[myHallData,setMyHallData] = useState(hallData);
-  const[a,setA] = useState({})
-  let b;
-  function seatSelection(id){
-     const [row,position] = id.split("_");
-     const change = hallData.seating_layout[row-1].seats[position-1];
-     change.isSelected = "true";
-     setMyHallData(myHallData);
-     console.log(change);
-     console.log(myHallData);
-      
-     b = {
-      backgroundColor:"red",
-     }
-     setA(b);
+  const myRef = useRef(null);
+  let count = 0;
+  function seatSelection(e){
+    //  const [row,position] = id.split("_");
+    //  const change = hallData.seating_layout[row-1].seats[position-1];
+    //  change.isSelected = "true";
+    //  setMyHallData(myHallData);
+    //  console.log(change);
+    //  console.log(myHallData);
+    //  console.log(myRef.current);
+    //  myRef.current.style.backgroundColor = "red";
+    if(ticketType === "Ticket Type"){
+      return alert("Please select ticket type")
+    }
+    else if(ticketQuantity === "Qty"){
+      return alert("Please select quantity of your ticket");
+    }
+    else{
+      count++;
+    console.log(count+" "+ticketQuantity);
+    if(count<=ticketQuantity){
+      e.target.style.backgroundColor = "green";
+    }    
+    }
     
   }
 
@@ -26,32 +36,34 @@ export function SheetBooking() {
       alert (`Your Ticket is confirmed.
       Ticket type ${ticketType}
       Ticket quantity ${ticketQuantity}`);
+      setTicketType("Ticket Type");
+      setTicketQuantity("Qty");
     }
-  
 
-  console.log(myHallData);
+  //console.log(myHallData);
+
   return (
     <div>
       {/* ticket selection */}
       <div className='ticketParent'>
         <select className='ticketType' onChange={(e)=>setTicketType(e.target.value)}>
-          <option hidden>Ticket Type</option>
+          <option hidden>{ticketType}</option>
           <option value="standard">Standard</option>
           <option value="premium">Premium</option>
         </select>
 
         <select className='ticketChoice ticketType' onChange={(e)=>setTicketQuantity(e.target.value)}>
-          <option hidden>Qty</option>
-          <option value="one">1</option>
-          <option value="two">2</option>
-          <option value="three">3</option>
-          <option value="four">4</option>
-          <option value="five">5</option>
-          <option value="six">6</option>
-          <option value="seven">7</option>
-          <option value="eight">8</option>
-          <option value="nine">9</option>
-          <option value="ten">10</option>
+          <option hidden>{ticketQuantity}</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
         </select>
       </div>
       {/*end of ticket selection */}
@@ -86,7 +98,7 @@ export function SheetBooking() {
                           }
                           else if (value.status === "available") {
                             return <td key={index2}>
-                              <div className={`hallSeat available`} style={a} onClick={()=>{seatSelection(makeId+"_"+value.position)}}></div>
+                              <div className="hallSeat available" ref={myRef} onClick={seatSelection}></div>
                             </td>
                           }
                           else {

@@ -93,6 +93,6 @@
   background-color: rgb(57, 190, 57);
 }
 
-.selected{
-  background-color: #d60c0c;
+.true{
+  background-color: red;
 }
